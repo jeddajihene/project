@@ -1,0 +1,72 @@
+.title-page-proprofile {
+  text-align: center;
+}
+.container {
+  width: 1200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.container .box {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  display: flex;
+  margin: 40px;
+}
+.container .box .imgBx {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: 0.5s ease-in-out;
+  z-index: 2;
+}
+.container .box:hover .imgBx {
+  transform: translate(-35px, -35px);
+}
+.container .box .imgBx img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.container .box .content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  transition: 0.5s ease-in-out;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  padding: 15px;
+}
+.container .box:hover .content {
+  transform: translate(35px, 47px);
+  box-shadow: 10px 20px 40px rgba(0, 0, 0, 0.25);
+}
+.container .box .content h1 {
+  width: 50%;
+  font-size: 20px;
+  color: #000;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 1px;
+  text-align: center;
+  font-family: Water Brush;
+}
+.container .box .content button {
+  font-size: 14px !important;
+  font-weight: 300 !important;
+  letter-spacing: 2px !important;
+  background-color: #f6416c !important;
+}

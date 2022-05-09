@@ -1,0 +1,145 @@
+/* header home css  */
+.header_home_container {
+  position: relative;
+  width: 100%;
+  background-image: url("../assets/images/birthday.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-size: cover;
+  padding-top: 45%;
+}
+.menu {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.menu1 {
+  font-family: "Parisienne", cursive;
+  font-size: 70px;
+  font-weight: lighter;
+  margin-bottom: 20px;
+}
+.menu2 {
+  /* font-family: "Parisienne", cursive; */
+  font-family: "Great Vibes", cursive;
+  font-size: 20px;
+  max-width: 900px;
+}
+/* Our services css */
+.title-service {
+  text-align: center;
+}
+.service-cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.service-card {
+  width: 300px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+.service-card-image {
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+.service-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
+.service-card-title {
+  font-size: 22px;
+  font-weight: 600;
+}
+/* our objects css  */
+.title-object {
+  text-align: center;
+}
+.object-cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.object-card {
+  width: 250px;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+.object-card-image {
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+}
+.object-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
+.object-card-title {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+/* Contact us css  */
+.formulaire {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 250px;
+  gap: 20px;
+}
+.contact-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.contact-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 400px;
+  box-shadow: 0 0 10px 3px hsl(0deg 0% 50% / 10%);
+  border-radius: 30px;
+  padding: 30px 30px 40px;
+}
+.contact-title {
+  margin-bottom: 20px;
+  font-size: 40px;
+  font-weight: 600;
+  color: #f6416c;
+  font-family: "Lobster", cursive;
+}
+.contact-button {
+  background-color: #f6416c !important;
+  color: #fff !important;
+  width: fit-content;
+  border-radius: 20px !important;
+  padding: 6px 20px !important;
+}

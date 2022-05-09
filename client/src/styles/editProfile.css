@@ -1,0 +1,101 @@
+.img-account-profile {
+  height: 10rem;
+}
+.rounded-circle {
+  border-radius: 50% !important;
+  margin-bottom: 20px !important;
+}
+.card {
+  box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
+}
+.card .card-header {
+  font-weight: 500;
+}
+.card-header:first-child {
+  border-radius: 0.35rem 0.35rem 0 0;
+}
+.card-header {
+  padding: 1rem 1.35rem;
+  margin-bottom: 0;
+  background-color: rgba(33, 40, 50, 0.03);
+  border-bottom: 1px solid rgba(33, 40, 50, 0.125);
+}
+.form-control,
+.dataTable-input {
+  display: block;
+  width: 100%;
+  padding: 0.875rem 1.125rem;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1;
+  color: #69707a;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #c5ccd6;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 0.35rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.avatar-buttons-container {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 20px;
+}
+.add-image-container {
+  height: 150px;
+  width: 150px;
+  border-radius: 16px;
+  border: 2px dashed #4c959e;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: 8px;
+  margin: 0px auto 20px;
+}
+.inner-add-image-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.inner-add-image-container input {
+  display: none;
+}
+.add-image-container p {
+  font-size: 0.875em;
+  text-align: center;
+  max-width: 76px;
+  color: #4c959e;
+}
+.show-image-container {
+  position: relative;
+  height: 150px;
+  width: 150px;
+  border-radius: 16px;
+  margin: 20px auto 20px;
+}
+.show-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+}
+.show-image-container input {
+  display: none;
+}
+.add-image-icon {
+  position: absolute !important;
+  right: -17px !important;
+  top: -15px !important;
+  background: #4c959e !important;
+}
+.edit-profile-button {
+  background-color: #f6416c !important;
+  color: #fff !important;
+  border: 1px solid #f6416c !important;
+  width: fit-content;
+  border-radius: 20px !important;
+  padding: 6px 20px !important;
+}
