@@ -31,12 +31,14 @@ exports.Login = async (req, res) => {
   try {
     const foundUser = await users.findOne({ email });
     if (!foundUser) {
-      return res.status(400).send({ erros: [{ msg: "bad credentials" }] });
+      return res
+        .status(400)
+        .send({ errors: [{ msg: "Please register before" }] });
     }
     // bcrypt
     const match = await bcrypt.compare(password, foundUser.password);
     if (!match) {
-      return res.status(400).send({ erros: [{ msg: "bad credentials" }] });
+      return res.status(400).send({ errors: [{ msg: "enter your password" }] });
     }
     // jwt
     const payload = { id: foundUser._id };

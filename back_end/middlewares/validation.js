@@ -2,10 +2,12 @@ const { body, validationResult, oneOf } = require("express-validator");
 const req = require("express/lib/request");
 const res = require("express/lib/response");
 exports.RegisterValidation = [
-  body("name", "name must be valid").notEmpty(),
+  body("name", "name must be valid")
+    .notEmpty()
+    .matches(/^[a-z ]+$/i),
   body("email", "please add a valid email").isEmail(),
   body("password", "Password must be at least 6 caracteres").isLength({
-    min: 6,
+    min: 6
   }),
 
   body("phone", "Phone must have 8 number")
@@ -15,16 +17,16 @@ exports.RegisterValidation = [
   oneOf(
     [
       body("category").equals("customer"),
-      [body("speciality", "Speciality error").notEmpty()],
+      [body("speciality", "Speciality error").notEmpty()]
     ],
     "Speciality error"
-  ),
+  )
 ];
 exports.LoginValidation = [
-  body("email", "please add a valid email").isEmail(),
-  body("password", "Password must be at least 6 caracteres").isLength({
-    min: 6,
-  }),
+  body("email", "put your email").isEmail(),
+  body("password", "enter your password").isLength({
+    min: 6
+  })
 ];
 exports.validation = (req, res, next) => {
   const errors = validationResult(req);
@@ -38,12 +40,17 @@ exports.updateNameValidation = [body("name", "name must be valid").notEmpty()];
 exports.updatePhoneValidation = [
   body("phone", "Phone must have 8 number")
     .isNumeric()
-    .isLength({ min: 8, max: 8 }),
+    .isLength({ min: 8, max: 8 })
 ];
 exports.updatePasswordValidation = [
-  body("newPassword", "Password error").isLength({ min: 6 }),
+  body("newPassword", "Password error").isLength({ min: 6 })
 ];
 exports.updateEmailValidation = [
   body("actuelEmail", "please add a valid email").isEmail(),
-  body("newEmail", "please add a valid email").isEmail(),
+  body("newEmail", "please add a valid email").isEmail()
+];
+exports.contactUsValidation = [
+  body("name", "please add your full name").notEmpty(),
+  body("email", "please add a valid email").isEmail(),
+  body("message", "please add your message").notEmpty()
 ];

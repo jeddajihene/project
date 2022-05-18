@@ -14,12 +14,15 @@ import {
   MenuItem,
   InputAdornment,
   IconButton,
-  Input,
+  Input
 } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { useDispatch } from "react-redux";
-import { registerUser } from "../redux/Actions/userActions";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  registerUser,
+  removeUserErrorAction
+} from "../redux/Actions/userActions";
 import { useNavigate } from "react-router-dom";
 
 const Register = ({ register, setRegister }) => {
@@ -32,23 +35,25 @@ const Register = ({ register, setRegister }) => {
     phone: "",
     category: "",
     speciality: "",
-    avatar: "https://img.icons8.com/officel/80/000000/user.png",
+    avatar: "https://img.icons8.com/officel/80/000000/user.png"
   });
   const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     setRegisterForm({
       ...registerForm,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
   };
   const handleClose = () => {
     setRegister(false);
+    dispatch(removeUserErrorAction());
   };
   const handleSubmit = () => {
     dispatch(registerUser(registerForm, navigate));
-    handleClose();
+    setRegister(false);
   };
+  const userData = useSelector((state) => state.userReducer);
   return (
     <>
       <Modal open={register} onClose={handleClose}>
@@ -64,14 +69,22 @@ const Register = ({ register, setRegister }) => {
               onChange={handleChange}
               name="name"
             />
-            <p className="msg-error-register">*must contain only letters</p>
+            <p
+              className={
+                userData.errors.filter((el) => el.msg === "name must be valid")
+                  .length !== 0
+                  ? "red-msg-error-register"
+                  : "msg-error-register"
+              }
+            >
+              *must contain only letters
+            </p>
 
             <FormControl className="register_radio_buttons">
               <p className="register_radio_buttons_label">Category:</p>
               <RadioGroup
                 row
                 aria-labelledby="demo-row-radio-buttons-group-label"
-                name="row-radio-buttons-group"
                 value={registerForm.category}
                 onChange={handleChange}
                 name="category"
@@ -89,28 +102,38 @@ const Register = ({ register, setRegister }) => {
                 />
               </RadioGroup>
             </FormControl>
+            {userData.errors.filter((el) => el.msg === "Category error")
+              .length !== 0 && (
+              <p className="red-msg-error-register">*is required</p>
+            )}
             {registerForm.category === "professional" && (
-              <FormControl
-                variant="standard"
-                sx={{ m: 1, Width: "100%", marginLeft: 0, marginRight: 0 }}
-              >
-                <InputLabel id="demo-simple-select-standard-label">
-                  Speciality
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-standard-label"
-                  id="demo-simple-select-standard"
-                  value={registerForm.speciality}
-                  onChange={handleChange}
-                  name="speciality"
-                  label="speciality"
+              <>
+                <FormControl
+                  variant="standard"
+                  sx={{ m: 1, Width: "100%", marginLeft: 0, marginRight: 0 }}
                 >
-                  <MenuItem value={"photographer"}>Photographer</MenuItem>
-                  <MenuItem value={"animator"}>Animator</MenuItem>
-                  <MenuItem value={"decorator"}>Decorator</MenuItem>
-                  <MenuItem value={"pastry_chef"}>Pastry chef</MenuItem>
-                </Select>
-              </FormControl>
+                  <InputLabel id="demo-simple-select-standard-label">
+                    Speciality
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-standard-label"
+                    id="demo-simple-select-standard"
+                    value={registerForm.speciality}
+                    onChange={handleChange}
+                    name="speciality"
+                    label="speciality"
+                  >
+                    <MenuItem value={"photographer"}>Photographer</MenuItem>
+                    <MenuItem value={"animator"}>Animator</MenuItem>
+                    <MenuItem value={"decorator"}>Decorator</MenuItem>
+                    <MenuItem value={"pastry_chef"}>Pastry chef</MenuItem>
+                  </Select>
+                </FormControl>
+                {userData.errors.filter((el) => el.msg === "Speciality error")
+                  .length !== 0 && (
+                  <p className="red-msg-error-register">*is required</p>
+                )}
+              </>
             )}
 
             <TextField
@@ -122,7 +145,17 @@ const Register = ({ register, setRegister }) => {
               onChange={handleChange}
               name="email"
             />
-            <p className="msg-error-register"> *please enter a valid email</p>
+            <p
+              className={
+                userData.errors.filter(
+                  (el) => el.msg === "please add a valid email"
+                ).length !== 0
+                  ? "red-msg-error-register"
+                  : "msg-error-register"
+              }
+            >
+              *please enter a valid email
+            </p>
             <TextField
               id="standard-basic"
               label="Phone"
@@ -132,7 +165,15 @@ const Register = ({ register, setRegister }) => {
               onChange={handleChange}
               name="phone"
             />
-            <p className="msg-error-register">
+            <p
+              className={
+                userData.errors.filter(
+                  (el) => el.msg === "Phone must have 8 number"
+                ).length !== 0
+                  ? "red-msg-error-register"
+                  : "msg-error-register"
+              }
+            >
               *please enter a valid phone number
             </p>
             <FormControl variant="standard">
@@ -162,7 +203,15 @@ const Register = ({ register, setRegister }) => {
                 }
               />
             </FormControl>
-            <p className="msg-error-register">
+            <p
+              className={
+                userData.errors.filter(
+                  (el) => el.msg === "Password must be at least 6 caracteres"
+                ).length !== 0
+                  ? "red-msg-error-register"
+                  : "msg-error-register"
+              }
+            >
               *must contain at least 6 characters
             </p>
           </div>

@@ -3,7 +3,6 @@ import OurServices from "../Components/OurServices";
 import OurObjects from "../Components/OurObjects";
 import ContactUs from "../Components/ContactUs";
 import HeaderHome from "../Components/HeaderHome";
-import ProfileCard from "../Components/ProfileCard";
 import "../styles/home.css";
 
 const Home = () => {
@@ -13,7 +12,6 @@ const Home = () => {
       <OurServices />
       <OurObjects />
       <ContactUs />
-      <ProfileCard />
     </div>
   );
 };

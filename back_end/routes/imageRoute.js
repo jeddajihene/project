@@ -10,22 +10,33 @@ const imageRouter = express.Router();
 imageRouter.post(
   "/addimage",
   isAuth,
-  upload.single("imageName"),
+  upload.array("gallery", 12),
   async (req, res) => {
-    console.log(req.file);
     try {
-      const newImage = new image({
-        imageName: req.file.filename,
-        ownerId: req.user.id,
+      const arr = [];
+      req.files.forEach((el) => {
+        el.path =
+          req.protocol +
+          "://" +
+          req.hostname +
+          ":" +
+          5000 +
+          "/images/" +
+          el.filename;
+        const newImage = new image({
+          imageName: el.path,
+          ownerId: req.user.id
+        });
+        newImage.save();
+        arr.push(newImage._id);
       });
-      await newImage.save();
       const user = await users.findById(req.user.id);
-      user.images.push(newImage._id);
+      user.images = [...user.images, ...arr];
       await user.save();
-
-      res.status(200).send({ msg: "image is added", newImage });
+      res.status(200).send({ msg: "Images is added" });
     } catch (error) {
       res.status(500).send("could not add image");
+      console.log(error);
     }
   }
 );

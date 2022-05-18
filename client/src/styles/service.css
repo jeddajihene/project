@@ -60,9 +60,13 @@
   text-align: center;
   font-weight: 700;
   line-height: 1em;
+  font-family: "Lobster", cursive;
+  margin-bottom: 30px;
 }
 .card-service .details .content h2 {
   color: black;
   font-size: 1.25em;
   text-align: center;
+  font-family: "Lobster", cursive;
+  cursor: pointer;
 }

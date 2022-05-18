@@ -9,6 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../assets/icons/logo.png";
 import { useSelector, useDispatch } from "react-redux";
 import { logOutAction } from "../../redux/Actions/userActions";
+import { getProfileAction } from "../../redux/Actions/profileActions";
 const NavbarC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -20,15 +21,15 @@ const NavbarC = () => {
   const handleregister = () => {
     setRegister(true);
   };
-  const handleClick = () => {
-    navigate("/service/work");
+  const handleClick = (id) => {
+    navigate(`/service/profile/${id}`);
   };
 
   const handleLogOut = () => {
     dispatch(logOutAction());
     navigate("/");
   };
-  const userData = useSelector((state) => state.userReducer);
+  const userReducer = useSelector((state) => state.userReducer);
   return (
     <>
       <Navbar variant="dark" className="nav_bar">
@@ -43,15 +44,18 @@ const NavbarC = () => {
                 Services
               </Nav.Link>
             </div>
-            {localStorage.getItem("token") || userData.auth ? (
+            {localStorage.getItem("token") || userReducer.auth ? (
               <div className="nav-bar-right">
                 <Chip
                   className="avatar-chip"
-                  onClick={handleClick}
-                  avatar={<Avatar alt="User" src={userData.user?.avatar} />}
-                  label={userData.user?.name}
+                  onClick={() => handleClick(userReducer.user?._id)}
+                  avatar={<Avatar alt="User" src={userReducer.user?.avatar} />}
+                  label={userReducer.user?.name}
                   variant="outlined"
                 />
+                <Nav.Link as={Link} to="edit-profile">
+                  Edit profile
+                </Nav.Link>
                 <Nav.Link onClick={handleLogOut}>LogOut</Nav.Link>
               </div>
             ) : (

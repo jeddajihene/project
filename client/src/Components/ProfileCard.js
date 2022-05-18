@@ -1,18 +1,19 @@
 import React from "react";
 import "../styles/profileCard.css";
-import profile from "../assets/images/profileimg.png";
-const ProfileCard = () => {
+import { useNavigate } from "react-router-dom";
+const ProfileCard = ({ profile }) => {
+  const navigate = useNavigate();
+
   return (
     <>
       <div className="profile-card">
         <div className="profile-card-img">
-          <img src={profile} />
+          <img src={profile.avatar} />
         </div>
         <div className="profile-content">
           <div className="profile-details">
             <h2>
-              {" "}
-              meriem
+              {profile.name}
               <br></br>
               <span>souissi one</span>
             </h2>
@@ -34,7 +35,13 @@ const ProfileCard = () => {
               </h3>
             </div>
             <div className="actionBtn">
-              <button>See profile</button>
+              <button
+                onClick={() => {
+                  navigate(`/service/profile/${profile._id}`);
+                }}
+              >
+                See profile
+              </button>
             </div>
           </div>
         </div>

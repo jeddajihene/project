@@ -1,21 +1,23 @@
 .title-page-proprofile {
   text-align: center;
 }
-.container {
+.profiles-pro-container {
   width: 1200px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+  padding-top: 70px;
+  gap: 20px;
 }
-.container .box {
+/* .profiles-pro-container .box {
   position: relative;
   width: 300px;
   height: 300px;
   display: flex;
   margin: 40px;
 }
-.container .box .imgBx {
+.profiles-pro-container .box .imgBx {
   position: absolute;
   top: 0;
   left: 0;
@@ -24,10 +26,10 @@
   transition: 0.5s ease-in-out;
   z-index: 2;
 }
-.container .box:hover .imgBx {
+.profiles-pro-container .box:hover .imgBx {
   transform: translate(-35px, -35px);
 }
-.container .box .imgBx img {
+.profiles-pro-container .box .imgBx img {
   position: absolute;
   top: 0;
   left: 0;
@@ -35,7 +37,7 @@
   height: 100%;
   object-fit: cover;
 }
-.container .box .content {
+.profiles-pro-container .box .content {
   position: absolute;
   top: 0;
   left: 0;
@@ -50,11 +52,11 @@
   align-items: flex-end;
   padding: 15px;
 }
-.container .box:hover .content {
+.profiles-pro-container .box:hover .content {
   transform: translate(35px, 47px);
   box-shadow: 10px 20px 40px rgba(0, 0, 0, 0.25);
 }
-.container .box .content h1 {
+.profiles-pro-container .box .content h1 {
   width: 50%;
   font-size: 20px;
   color: #000;
@@ -64,9 +66,9 @@
   text-align: center;
   font-family: Water Brush;
 }
-.container .box .content button {
+.profiles-pro-container .box .content button {
   font-size: 14px !important;
   font-weight: 300 !important;
   letter-spacing: 2px !important;
   background-color: #f6416c !important;
-}
+} */

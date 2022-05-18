@@ -13,11 +13,20 @@ avatarRouter.post(
   upload.single("avatar"),
   async (req, res) => {
     console.log(req.file);
+    let path =
+      req.protocol +
+      "://" +
+      req.hostname +
+      ":" +
+      5000 +
+      "/images/" +
+      req.file.filename;
     try {
       const user = await users.findById(req.user.id);
-      user.avatar = req.file.filename;
+      user.avatar = path;
       await user.save();
-      res.status(200).send({ msg: "avatar is added", user });
+      console.log("avatar", user.avatar);
+      res.status(200).send({ msg: "Avatar is added" });
     } catch (error) {
       res.status(500).send("could not add avatar");
     }

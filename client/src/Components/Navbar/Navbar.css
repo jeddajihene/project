@@ -2,7 +2,7 @@
   position: fixed !important;
   top: 0;
   width: 100%;
-  z-index: 3;
+  z-index: 15;
   background: linear-gradient(
     rgba(0, 0, 0, 0.4),
     rgba(0, 0, 0, 0.4)
@@ -114,4 +114,13 @@
   margin-top: 3px;
   margin-bottom: 10px;
   font-weight: lighter;
+}
+.red-msg-error-register {
+  font-family: "Lobster", cursive;
+  font-size: 13px;
+  color: #f6416c;
+  margin-top: 3px;
+  margin-bottom: 10px;
+  font-weight: lighter;
+  width: 100%;
 }

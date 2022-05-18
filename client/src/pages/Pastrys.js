@@ -1,0 +1,48 @@
+import { Button } from "@mui/material";
+import React, { useEffect } from "react";
+import image1 from "../assets/images/image1.jpeg";
+import "../styles/profilesPro.css";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getPastryAction } from "../redux/Actions/servicesCardsActions";
+import ProfileCard from "../Components/ProfileCard";
+
+const Pastrys = () => {
+  const servicesCardsReducer = useSelector(
+    (state) => state.servicesCardsReducer
+  );
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getPastryAction());
+  }, []);
+
+  const handleWork = () => {
+    navigate("/service/work");
+  };
+  return (
+    <div style={{ paddingTop: 90 }}>
+      <h1 className="title-page-proprofile">Pastrys</h1>
+      <div className="profiles-pro-container">
+        {servicesCardsReducer.pastrys?.map((el, i) => (
+          // profil is a props//
+          <ProfileCard profile={el} />
+        ))}
+
+        {/* <div className="box">
+          <div className="imgBx">
+            <img src={image1} />
+          </div>
+          <div className="content">
+            <h1>jihene jedda </h1>
+            <Button variant="contained" onClick={handleWork}>
+              See profile
+            </Button>
+          </div>
+        </div> */}
+      </div>
+    </div>
+  );
+};
+
+export default Pastrys;

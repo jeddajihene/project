@@ -10,18 +10,27 @@ offerRouter.post(
   isAuth,
   upload.single("offerImage"),
   async (req, res) => {
+    let path =
+      req.protocol +
+      "://" +
+      req.hostname +
+      ":" +
+      5000 +
+      "/images/" +
+      req.file.filename;
     try {
-      let myBody = JSON.parse(req.body.addOffer);
+      const myBody = JSON.parse(req.body.addOffer);
       const newOffer = new offer({
         ...myBody,
         ownerId: req.user._id,
-        offerImage: req.file.filename,
+        offerImage: path
       });
       await newOffer.save();
+      console.log(newOffer.offerImage);
       const user = await users.findById(req.user.id);
       user.offers.push(newOffer._id);
       await user.save();
-      res.status(200).send({ msg: "offer is added", newOffer });
+      res.status(200).send({ msg: "Offer is added", newOffer });
     } catch (error) {
       res.status(500).send({ msg: "could not add offer" });
     }
@@ -71,7 +80,7 @@ offerRouter.delete("/deleteoffer/:id", isAuth, async (req, res) => {
     console.log("new", user.offers);
     await user.save();
     await offer.findByIdAndDelete(req.params.id);
-    res.status(200).send({ msg: "offer is deleted", deleteOffer });
+    res.status(200).send(req.params.id);
   } catch (error) {
     res.status(500).send("offer not deleted");
   }

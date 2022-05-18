@@ -1,33 +1,38 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "../styles/editProfile.css";
 import {
   upadatePassWordAction,
-  upadateUserAction,
+  upadateUserAction
 } from "../redux/Actions/userActions";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
 import { upadateAvatarAction } from "../redux/Actions/avatarAction";
-import { IconButton } from "@mui/material";
-import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
-import { addOfferAction } from "../redux/Actions/offerActions";
+import { Alert } from "@mui/material";
+
+// import { addOfferAction } from "../redux/Actions/offerActions";
+import AddGallery from "../Components/AddGallery";
+import AddOffer from "../Components/AddOffer";
 
 const Profile = () => {
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.userReducer);
+  // const offerReducer = useSelector((state) => state.offerReducer);
+  const [showSuccessAlertPassword, setShowSuccessAlertPassword] =
+    useState(false);
+  //const [showSuccessAlertOffer, setShowSuccessAlertOffer] = useState(false);
   const [upadateUser, setUpadateUser] = useState({
     name: "",
     phone: "",
     address: "",
     proNumber: "",
     facebook: "",
-    instagram: "",
+    instagram: ""
   });
 
   const handleChangeUser = (e) => {
     setUpadateUser({
       ...upadateUser,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
   };
   const handleSubmitUpdates = () => {
@@ -36,12 +41,12 @@ const Profile = () => {
   const [upadatePassWord, setUpadatePassWord] = useState({
     actualpassword: "",
     confirmPassword: "",
-    newPassword: "",
+    newPassword: ""
   });
   const handleChange = (e) => {
     setUpadatePassWord({
       ...upadatePassWord,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
   };
   const handleUpadatePassword = () => {
@@ -51,8 +56,8 @@ const Profile = () => {
   const [showAvatar, setShowAvatar] = useState(null);
   const editAvatar = useRef();
   const handlechangeAvatar = (e) => {
-    console.log(e.target.files[0]);
     setAvatar(e.target.files[0]);
+    console.log(e.target.files);
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
@@ -62,43 +67,66 @@ const Profile = () => {
       reader.readAsDataURL(file);
     }
   };
-  const formData = new FormData();
-  formData.append("avatar", avatar);
-  const saveAvatar = () => {
-    dispatch(upadateAvatarAction(formData));
+
+  const saveAvatar = (e) => {
+    e.preventDefault();
+    dispatch(upadateAvatarAction(avatar));
   };
 
-  const [addOffer, setAddOffer] = useState({
-    offerTitle: "",
-    offerDetails: "",
-    offerPrice: 0,
-  });
-  const handleChangeOffer = (e) => {
-    setAddOffer({
-      ...addOffer,
-      [e.target.name]: e.target.value,
-    });
-  };
-  const [offerImage, setofferImage] = useState(null);
-  const [showOfferImage, setShowOfferImage] = useState(null);
-  const addOfferImage = useRef();
-  const handleAddOfferImage = (e) => {
-    setofferImage(e.target.files[0]);
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setShowOfferImage(reader.result);
-      };
-      reader.readAsDataURL(file);
+  // const [addOffer, setAddOffer] = useState({
+  //   offerTitle: "",
+  //   offerDetails: "",
+  //   offerPrice: 0
+  // });
+  // const handleChangeOffer = (e) => {
+  //   setAddOffer({
+  //     ...addOffer,
+  //     [e.target.name]: e.target.value
+  //   });
+  // };
+  // const [offerImage, setofferImage] = useState(null);
+  // const [showOfferImage, setShowOfferImage] = useState(null);
+  // const addOfferImage = useRef();
+  // const handleAddOfferImage = (e) => {
+  //   setofferImage(e.target.files[0]);
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onload = () => {
+  //       setShowOfferImage(reader.result);
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
+  // const handleAddOffer = (e) => {
+  //   e.preventDefault();
+  //   dispatch(addOfferAction(addOffer, offerImage));
+  // };
+  useEffect(() => {
+    if (userData?.password_msg) {
+      setShowSuccessAlertPassword(true);
+      setUpadatePassWord({
+        actualpassword: "",
+        confirmPassword: "",
+        newPassword: ""
+      });
     }
-  };
-  const handleAddOffer = () => {
-    dispatch(addOfferAction(addOffer, offerImage));
-  };
+  }, [userData.password_msg]);
+  // useEffect(() => {
+  //   if (offerReducer?.success_offer_msg) {
+  //     setShowSuccessAlertOffer(true);
+  //     setShowOfferImage(null);
+  //     setAddOffer({
+  //       offerTitle: "",
+  //       offerDetails: "",
+  //       offerPrice: 0
+  //     });
+  //   }
+  // }, [offerReducer.success_offer_msg]);
   return (
     <div class="container-xl px-4 mt-4" style={{ paddingTop: 60 }}>
       <div class="row">
+        {/* Edit Avatar */}
         <div class="col-xl-4">
           <div class="card mb-4 mb-xl-0">
             <div class="card-header">Profile Picture</div>
@@ -125,7 +153,7 @@ const Profile = () => {
                   style={{ display: "none" }}
                   id="inputUserAvatar"
                   type="file"
-                  accept="image/*"
+                  // accept="image/*"
                   onChange={handlechangeAvatar}
                 />
                 <button
@@ -141,159 +169,175 @@ const Profile = () => {
           </div>
         </div>
         <div class="col-xl-8">
+          {/* Edit user data */}
           <div class="card mb-4">
             <div class="card-header">Account Details</div>
             <div class="card-body">
-              <form>
-                <div class="mb-3">
-                  <label class="small mb-1" for="inputUsername">
-                    Update your name
+              {/* <form> */}
+              <div class="mb-3">
+                <label class="small mb-1" for="inputUsername">
+                  Update your name
+                </label>
+                <input
+                  class="form-control"
+                  id="inputUsername"
+                  type="text"
+                  placeholder="Enter your full name"
+                  name="name"
+                  value={upadateUser.name}
+                  onChange={handleChangeUser}
+                />
+              </div>
+
+              <div class="row gx-3 mb-3">
+                <div class="col-md-6">
+                  <label class="small mb-1" for="inputPhone">
+                    Update your phone number
                   </label>
                   <input
                     class="form-control"
-                    id="inputUsername"
+                    id="inputPhone"
                     type="text"
-                    placeholder="Enter your full name"
-                    name="name"
-                    value={upadateUser.name}
+                    placeholder="Enter your phone number"
+                    name="phone"
+                    value={upadateUser.phone}
                     onChange={handleChangeUser}
                   />
                 </div>
 
-                <div class="row gx-3 mb-3">
-                  <div class="col-md-6">
-                    <label class="small mb-1" for="inputPhone">
-                      Update your phone number
-                    </label>
-                    <input
-                      class="form-control"
-                      id="inputPhone"
-                      type="text"
-                      placeholder="Enter your phone number"
-                      name="phone"
-                      value={upadateUser.phone}
-                      onChange={handleChangeUser}
-                    />
-                  </div>
-
-                  <div class="col-md-6">
-                    <label class="small mb-1" for="inputProNumber">
-                      Add your Pro phone number
-                    </label>
-                    <input
-                      class="form-control"
-                      id="inputProNumber"
-                      type="text"
-                      placeholder="Enter your pro phone number"
-                      name="proNumber"
-                      value={upadateUser.proNumber}
-                      onChange={handleChangeUser}
-                    />
-                  </div>
-                </div>
-                <div class="mb-3">
-                  <label class="small mb-1" for="inputAddress">
-                    Add your address
+                <div class="col-md-6">
+                  <label class="small mb-1" for="inputProNumber">
+                    Add your Pro phone number
                   </label>
                   <input
                     class="form-control"
-                    id="inputAddress"
+                    id="inputProNumber"
                     type="text"
-                    placeholder="Enter your address"
-                    name="address"
-                    value={upadateUser.address}
+                    placeholder="Enter your pro phone number"
+                    name="proNumber"
+                    value={upadateUser.proNumber}
                     onChange={handleChangeUser}
                   />
                 </div>
-                <div class="row gx-3 mb-3">
-                  <div class="col-md-6">
-                    <label class="small mb-1" for="inputFaceBook">
-                      Add your Facebook account
-                    </label>
-                    <input
-                      class="form-control"
-                      id="inputFaceBook"
-                      type="text"
-                      placeholder="Enter your Facebook account"
-                      name="facebook"
-                      value={upadateUser.facebook}
-                      onChange={handleChangeUser}
-                    />
-                  </div>
-
-                  <div class="col-md-6">
-                    <label class="small mb-1" for="inputInstagram">
-                      Add your Instagram account
-                    </label>
-                    <input
-                      class="form-control"
-                      id="inputInstagram"
-                      type="text"
-                      placeholder="Enter your Instagram account"
-                      name="instagram"
-                      value={upadateUser.instagram}
-                      onChange={handleChangeUser}
-                    />
-                  </div>
+              </div>
+              <div class="mb-3">
+                <label class="small mb-1" for="inputAddress">
+                  Add your address
+                </label>
+                <input
+                  class="form-control"
+                  id="inputAddress"
+                  type="text"
+                  placeholder="Enter your address"
+                  name="address"
+                  value={upadateUser.address}
+                  onChange={handleChangeUser}
+                />
+              </div>
+              <div class="row gx-3 mb-3">
+                <div class="col-md-6">
+                  <label class="small mb-1" for="inputFaceBook">
+                    Add your Facebook account
+                  </label>
+                  <input
+                    class="form-control"
+                    id="inputFaceBook"
+                    type="text"
+                    placeholder="Enter your Facebook account"
+                    name="facebook"
+                    value={upadateUser.facebook}
+                    onChange={handleChangeUser}
+                  />
                 </div>
 
-                <button
-                  class="btn btn-primary edit-profile-button"
-                  type="button"
-                  onClick={handleSubmitUpdates}
-                >
-                  Save changes
-                </button>
-              </form>
+                <div class="col-md-6">
+                  <label class="small mb-1" for="inputInstagram">
+                    Add your Instagram account
+                  </label>
+                  <input
+                    class="form-control"
+                    id="inputInstagram"
+                    type="text"
+                    placeholder="Enter your Instagram account"
+                    name="instagram"
+                    value={upadateUser.instagram}
+                    onChange={handleChangeUser}
+                  />
+                </div>
+              </div>
+
+              <button
+                class="btn btn-primary edit-profile-button"
+                type="button"
+                onClick={handleSubmitUpdates}
+              >
+                Save changes
+              </button>
+              {/* </form> */}
             </div>
           </div>
+          {/* Edit Password */}
           <div class="card mb-4">
             <div class="card-header">Update Password</div>
             <div class="card-body">
-              <form>
-                <div class="mb-3">
-                  <label class="small mb-1" for="inputActualPassword">
-                    Actual Password
-                  </label>
-                  <input
-                    class="form-control"
-                    id="inputActualPassword"
-                    type="password"
-                    placeholder="Enter your actual password"
-                    name="actualpassword"
-                    value={upadatePassWord.actualpassword}
-                    onChange={handleChange}
-                  />
-                </div>
-
-                <div class="mb-3">
-                  <label class="small mb-1" for="inputNewPassword">
-                    New Password
-                  </label>
-                  <input
-                    class="form-control"
-                    id="inputNewPassword"
-                    type="password"
-                    placeholder="Enter your new password"
-                    name="newPassword"
-                    value={upadatePassWord.newPassword}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div class="mb-3">
-                  <label class="small mb-1" for="inputConfirmPassword">
-                    Confirm New Password
-                  </label>
-                  <input
-                    class="form-control"
-                    id="inputConfirmPassword"
-                    type="password"
-                    placeholder="Enter your new password again"
-                    name="confirmPassword"
-                    value={upadatePassWord.confirmPassword}
-                    onChange={handleChange}
-                  />
-                </div>
+              <div class="mb-3">
+                <label class="small mb-1" for="inputActualPassword">
+                  Actual Password
+                </label>
+                <input
+                  class="form-control"
+                  id="inputActualPassword"
+                  type="password"
+                  placeholder="Enter your actual password"
+                  name="actualpassword"
+                  value={upadatePassWord.actualpassword}
+                  onChange={handleChange}
+                />
+              </div>
+              {userData.errors.filter((el) => el.msg === "Wrong password")
+                .length !== 0 && (
+                <p className="red-msg-error-register">*Wrong password</p>
+              )}
+              <div class="mb-3">
+                <label class="small mb-1" for="inputNewPassword">
+                  New Password
+                </label>
+                <input
+                  class="form-control"
+                  id="inputNewPassword"
+                  type="password"
+                  placeholder="Enter your new password"
+                  name="newPassword"
+                  value={upadatePassWord.newPassword}
+                  onChange={handleChange}
+                />
+              </div>
+              {userData.errors.filter((el) => el.msg === "Password error")
+                .length !== 0 && (
+                <p className="red-msg-error-register">
+                  *must contain at least 6 characters
+                </p>
+              )}
+              <div class="mb-3">
+                <label class="small mb-1" for="inputConfirmPassword">
+                  Confirm New Password
+                </label>
+                <input
+                  class="form-control"
+                  id="inputConfirmPassword"
+                  type="password"
+                  placeholder="Enter your new password again"
+                  name="confirmPassword"
+                  value={upadatePassWord.confirmPassword}
+                  onChange={handleChange}
+                />
+              </div>
+              {userData.errors.filter(
+                (el) => el.msg === "Passwords don't match"
+              ).length !== 0 && (
+                <p className="red-msg-error-register">*passwords don't match</p>
+              )}
+              <div className="card-Footer">
                 <button
                   class="btn btn-primary edit-profile-button"
                   type="button"
@@ -301,120 +345,26 @@ const Profile = () => {
                 >
                   Save changes
                 </button>
-              </form>
-            </div>
-          </div>
-          <div class="card mb-4">
-            <div class="card-header">Add gallery image</div>
-            <div class="card-body">
-              <h1>hello world</h1>
-            </div>
-          </div>
-          <div class="card mb-4">
-            <div class="card-header">Add offers</div>
-            <div class="card-body">
-              <form>
-                {showOfferImage ? (
-                  <div className="show-image-container">
-                    <img alt="" src={showOfferImage} />
-                    <IconButton
-                      onClick={() => addOfferImage.current.click()}
-                      className="add-image-icon"
+                {showSuccessAlertPassword && (
+                  <>
+                    <Alert
+                      severity="success"
+                      onClose={() => {
+                        setShowSuccessAlertPassword(false);
+                      }}
                     >
-                      <AddAPhotoIcon style={{ color: "#fff" }} />
-                    </IconButton>
-                    <label
-                      htmlFor="importOfferImage"
-                      ref={addOfferImage}
-                    ></label>
-                    <input
-                      type="file"
-                      id="importOfferImage"
-                      accept="image/*"
-                      onChange={handleAddOfferImage}
-                    />
-                  </div>
-                ) : (
-                  <div className="add-image-container">
-                    <div className="inner-add-image-container">
-                      <IconButton onClick={() => addOfferImage.current.click()}>
-                        <AddAPhotoIcon
-                          style={{ color: "#4C959E", fontSize: 40 }}
-                        />
-                      </IconButton>
-                      <label
-                        htmlFor="importOfferImage"
-                        ref={addOfferImage}
-                      ></label>
-                      <input
-                        type="file"
-                        id="importOfferImage"
-                        accept="image/*"
-                        onChange={handleAddOfferImage}
-                      />
-                    </div>
-                    <p>Add offer image</p>
-                  </div>
+                      {userData?.password_msg}
+                    </Alert>
+                  </>
                 )}
+              </div>
 
-                <div class="row gx-3 mb-3">
-                  <div class="col-md-6">
-                    <label class="small mb-1" for="offerTitle">
-                      Offer Title
-                    </label>
-                    <input
-                      class="form-control"
-                      id="offerTitle"
-                      type="text"
-                      placeholder="Enter offer title"
-                      name="offerTitle"
-                      value={addOffer.offerTitle}
-                      onChange={handleChangeOffer}
-                    />
-                  </div>
-
-                  <div class="col-md-6">
-                    <label class="small mb-1" for="offerPrice">
-                      Offer price
-                    </label>
-                    <input
-                      class="form-control"
-                      id="offerPrice"
-                      type="text"
-                      placeholder="Enter offer price"
-                      name="offerPrice"
-                      value={addOffer.offerPrice}
-                      onChange={handleChangeOffer}
-                    />
-                  </div>
-                </div>
-                <div class="mb-3">
-                  <label class="small mb-1" for="offerDetails">
-                    Offer details
-                  </label>
-                  <textarea
-                    cols="40"
-                    rows="5"
-                    class="form-control"
-                    id="offerDetails"
-                    type="text"
-                    placeholder="Describe the offer"
-                    name="offerDetails"
-                    value={addOffer.offerDetails}
-                    onChange={handleChangeOffer}
-                  />
-                </div>
-
-                <button
-                  class="btn btn-primary edit-profile-button"
-                  type="button"
-                  onClick={handleAddOffer}
-                >
-                  Add Offer
-                </button>
-              </form>
+              {/* </form> */}
             </div>
           </div>
+          <AddGallery />
+          {/* Add Offer */}
+          <AddOffer />
         </div>
       </div>
     </div>

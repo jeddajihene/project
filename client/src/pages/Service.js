@@ -9,19 +9,20 @@ import { useNavigate } from "react-router-dom";
 const Service = () => {
   const navigate = useNavigate();
   const sevicesArr1 = [
-    { img: image1, title: "Pastry shop" },
-    { img: photograph, title: "Photography" },
+    { img: image1, title: "Pastry shop", linkTo: "pastrys" },
+    { img: photograph, title: "Photography", linkTo: "photographers" }
   ];
+  //link to('decorators') is get it from app.js
   const sevicesArr2 = [
-    { img: decoration, title: "Decoration" },
-    { img: animateur, title: "Animation" },
+    { img: decoration, title: "Decoration", linkTo: "decorators" },
+    { img: animateur, title: "Animation", linkTo: "animators" }
   ];
-  const handleProfils = () => {
-    navigate("/service/profils");
+  const handleProfils = (el) => {
+    //link to tkamil il url de page elli n7ebou nimchiw leha w navigate hiya elli bech thezna
+    navigate(`/service/${el.linkTo}`);
   };
   return (
-    <div style={{ paddingTop: 70 }}>
-      <h1 className="title-page-service">Our Services </h1>
+    <div style={{ paddingTop: 90 }}>
       <div className="card-service-container">
         {sevicesArr1.map((el) => (
           <div className="card-service">
@@ -33,7 +34,7 @@ const Service = () => {
             <div className="details">
               <div className="content">
                 <h1>{el.title}</h1>
-                <h2 onClick={handleProfils}>Meet our team</h2>
+                <h2 onClick={() => handleProfils(el)}>Meet our team</h2>
               </div>
             </div>
           </div>
@@ -50,8 +51,7 @@ const Service = () => {
             <div className="details">
               <div className="content">
                 <h1>{el.title}</h1>
-                {/* <h1>Photography</h1> */}
-                <h2 onClick={handleProfils}>Meet our team</h2>
+                <h2 onClick={() => handleProfils(el)}>Meet our team</h2>
               </div>
             </div>
           </div>

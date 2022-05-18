@@ -1,4 +1,5 @@
 const express = require("express");
+var cors = require("cors");
 const connectDb = require("./config/connectDb");
 const commentaireRouter = require("./routes/commentaireRoute");
 const userRouter = require("./routes/userRoute");
@@ -6,17 +7,27 @@ const offerRouter = require("./routes/offerRoute");
 const editprofilRouter = require("./routes/editprofilRoute");
 const imageRouter = require("./routes/imageRoute");
 const avatarRouter = require("./routes/avatar");
+const serviceCardRouter = require("./routes/servicesCardsRoute");
+const profileRouter = require("./routes/profileRoute");
+const contactRouter = require("./routes/contactUsRoute");
+const adminRouter = require("./routes/adminRoute");
 const app = express();
 require("dotenv").config;
 const PORT = process.env.PORT || 5000;
 connectDb();
 app.use(express.json());
+app.use(cors());
+app.use("/images", express.static(__dirname + "/images"));
 app.use("/api/users", userRouter);
 app.use("/api/commentaire", commentaireRouter);
 app.use("/api/offer", offerRouter);
 app.use("/api/editprofil", editprofilRouter);
 app.use("/api/image", imageRouter);
 app.use("/api/avatar", avatarRouter);
+app.use("/api/servicesCards", serviceCardRouter);
+app.use("/api/profile", profileRouter);
+app.use("/api/contactus", contactRouter);
+app.use("/admin", adminRouter);
 app.listen(PORT, (err) =>
   console.log(`server is running on http://localhost:${PORT}`)
 );

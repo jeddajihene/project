@@ -11,6 +11,7 @@ import {
   UPDATE_USER_FAIL,
   LOAD_USER_SUCCESS,
   LOAD_USER_FAIL,
+  REMOVE_USER_ERROR
 } from "../actionTypes/userActionTypes";
 import setToken from "../../utils/setTokenInHeader";
 
@@ -74,4 +75,8 @@ export const loadUserAction = () => async (dispatch) => {
   } catch (error) {
     dispatch({ type: LOAD_USER_FAIL, payload: error.response.data });
   }
+};
+//REMOVE USER ERROR
+export const removeUserErrorAction = () => async (dispatch) => {
+  dispatch({ type: REMOVE_USER_ERROR, payload: [] });
 };

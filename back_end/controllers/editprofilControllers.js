@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 exports.UpdateUser = async (req, res) => {
   try {
     const user = await users.findByIdAndUpdate(req.user.id, {
-      $set: { ...req.body },
+      $set: { ...req.body }
     });
     await user.save();
     res.status(200).send({ msg: "User is upadated" });
@@ -43,12 +43,6 @@ exports.UpdatePassword = async (req, res) => {
     if (!match) {
       return res.status(400).send({ errors: [{ msg: "Wrong password" }] });
     }
-
-    // const errors = validationResult(req);
-    // if (!errors.isEmpty()) {
-    //   console.log(errors);
-    //   return res.status(400).json({ errors: errors.array() });
-    // } else
     if (req.body.newPassword !== req.body.confirmPassword) {
       return res
         .status(400)
@@ -58,7 +52,7 @@ exports.UpdatePassword = async (req, res) => {
     const hashPassword = bcrypt.hashSync(req.body.newPassword, salt);
     user.password = hashPassword;
     user.save();
-    res.status(200).json("passeword is updated!");
+    res.status(200).json("Passeword is updated!");
   } catch (error) {
     console.log(error.message);
     res.status(500).send({ msg: "Server Error" });

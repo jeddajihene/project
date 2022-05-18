@@ -38,13 +38,13 @@ editprofilRouter.put(
 // );
 // update password
 
-// editprofilRouter.put(
-//   "/updatepassword",
-//   isAuth,
-//   updatePasswordValidation,
-//   validation,
-//   UpdatePassword
-// );
+editprofilRouter.put(
+  "/updatepassword",
+  isAuth,
+  updatePasswordValidation,
+  validation,
+  UpdatePassword
+);
 
 // update phone
 // editprofilRouter.put(

@@ -15,27 +15,27 @@ const users = new mongoose.Schema({
   images: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "image",
-    },
+      ref: "image"
+    }
   ],
   comments: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "comment",
-    },
+      ref: "commmentaire"
+    }
   ],
 
   offers: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "offer",
-    },
-  ],
-  testimonials: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "testimonial",
-    },
-  ],
+      ref: "offer"
+    }
+  ]
+  // testimonials: [
+  //   {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: "testimonial"
+  //   }
+  // ]
 });
 module.exports = mongoose.model("user", users);
