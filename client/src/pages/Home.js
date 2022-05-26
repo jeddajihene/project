@@ -9,8 +9,8 @@ const Home = () => {
   return (
     <div style={{ marginBottom: 30 }}>
       <HeaderHome />
-      <OurServices />
       <OurObjects />
+      <OurServices />
       <ContactUs />
     </div>
   );

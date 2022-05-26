@@ -4,14 +4,19 @@ import {
   AccordionDetails,
   AccordionSummary,
   Alert,
+  Button,
   IconButton,
   Typography
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { addOfferAction } from "../redux/Actions/offerActions";
+import {
+  addOfferAction,
+  deleteOfferAction
+} from "../redux/Actions/offerActions";
 
 const AddOffer = () => {
   const dispatch = useDispatch();
@@ -58,6 +63,9 @@ const AddOffer = () => {
       });
     }
   }, [offerReducer.success_offer_msg]);
+  const handleDeleteOffer = (id) => {
+    dispatch(deleteOfferAction(id));
+  };
   return (
     <div class="card mb-4">
       <div class="card-header">Add offers</div>
@@ -165,22 +173,40 @@ const AddOffer = () => {
             </>
           )}
         </div>
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-          >
-            <Typography>Accordion 1</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
+
+        <div className="offers-container">
+          {offerReducer.offers?.map((el, i) => (
+            <Accordion key={i}>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <Typography>{el.offerTitle}</Typography>
+              </AccordionSummary>
+              <AccordionDetails className="offer-details">
+                <img src={el.offerImage} alt="" />
+                <div className="offer-description">
+                  <h6>Description</h6>
+                  <p>{el.offerDetails}</p>
+                  <h6>Price</h6>
+                  <p>
+                    {el.offerPrice}
+                    <span>DT</span>
+                  </p>
+                  <Button
+                    variant="contained"
+                    startIcon={<DeleteIcon />}
+                    className="delete-offer-button"
+                    onClick={() => handleDeleteOffer(el._id)}
+                  >
+                    Delete
+                  </Button>
+                </div>
+              </AccordionDetails>
+            </Accordion>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import {
   AVATAR_FAIL
 } from "../actionTypes/userActionTypes";
 export const upadateAvatarAction = (avatar) => async (dispatch) => {
+  dispatch({ type: LOADING });
   let formData = new FormData();
   formData.append("avatar", avatar);
   try {

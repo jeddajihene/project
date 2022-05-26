@@ -36,13 +36,13 @@ offerRouter.post(
     }
   }
 );
-//get all offers
-offerRouter.get("/getoffer", isAuth, async (req, res) => {
+//get user offers
+offerRouter.get("/getoffers", isAuth, async (req, res) => {
   try {
-    const offers = await offer.find().populate("userId");
-    res.status(200).send({ msg: "list of offers", offers });
+    const offers = await offer.find({ ownerId: req.user.id });
+    res.status(200).send(offers);
   } catch (error) {
-    res.status(500).send("could not get offers");
+    res.status(500).send({ msg: "could not get offers" });
   }
 });
 //get one offer

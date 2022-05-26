@@ -3,11 +3,14 @@ const bcrypt = require("bcrypt");
 // update name
 exports.UpdateUser = async (req, res) => {
   try {
-    const user = await users.findByIdAndUpdate(req.user.id, {
-      $set: { ...req.body }
-    });
+    const user = await users.findByIdAndUpdate(
+      req.user.id,
+      { ...req.body },
+      { new: true }
+    );
+
     await user.save();
-    res.status(200).send({ msg: "User is upadated" });
+    res.status(200).send({ msg: "User is upadated", user });
   } catch (error) {
     res.status(500).send("User not updated");
   }

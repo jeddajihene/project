@@ -12,7 +12,8 @@ import {
   LOGOUT,
   LOAD_USER_SUCCESS,
   LOAD_USER_FAIL,
-  REMOVE_USER_ERROR
+  REMOVE_USER_ERROR,
+  REMOVE
 } from "../actionTypes/userActionTypes";
 
 const initialState = {
@@ -29,7 +30,8 @@ const userReducer = (state = initialState, { type, payload }) => {
     case FAIL:
       return {
         ...state,
-        errors: payload.errors
+        errors: payload.errors,
+        auth: false
       };
     case REGISTER:
       localStorage.setItem("token", payload.token);
@@ -63,12 +65,14 @@ const userReducer = (state = initialState, { type, payload }) => {
     case PASSWORD_FAIL:
       return {
         ...state,
-        errors: payload.errors
+        errors: payload.errors,
+        password_msg: ""
       };
     case UPDATE_USER_SUCCESS:
       return {
         ...state,
-        updated_user_msg: payload,
+        user: payload.user,
+        updated_user_msg: payload.msg,
         load: false,
         errors: []
       };
@@ -106,6 +110,7 @@ const userReducer = (state = initialState, { type, payload }) => {
         ...state,
         user: payload.user,
         load: false,
+        auth: true,
         errors: []
       };
     case LOAD_USER_FAIL:
@@ -117,6 +122,14 @@ const userReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         errors: payload
+      };
+    case REMOVE:
+      return {
+        password_msg: "",
+        updated_user_msg: "",
+        avatar_updated: false,
+        updated_avatar_msg: "",
+        errors: []
       };
     default:
       return state;

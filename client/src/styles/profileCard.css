@@ -1,6 +1,6 @@
 .profile-card {
   position: relative;
-  width: 300px;
+  width: 250px;
   height: 190px;
   background: #fff;
   border-radius: 20px;
@@ -9,7 +9,7 @@
   transition: 0.5s;
 }
 .profile-card:hover {
-  height: 450px;
+  height: 350px;
 }
 .profile-card-img {
   position: absolute;
@@ -25,8 +25,8 @@
   transition: 0.5s;
 }
 .profile-card:hover .profile-card-img {
-  width: 250px;
-  height: 250px;
+  width: 180px;
+  height: 180px;
 }
 .profile-card-img img {
   position: relative;
@@ -51,9 +51,13 @@
   width: 100%;
   transition: 0.5s;
   transform: translateY(150px);
+  display: flex;
+  flex-direction: column;
+  gap: 90px;
 }
 .profile-card:hover .profile-content .profile-details {
   transform: translateY(0px);
+  gap: 80px;
 }
 .profile-card .profile-content .profile-details h2 {
   font-size: 1.25em;

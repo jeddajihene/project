@@ -119,3 +119,27 @@
   align-items: center;
   justify-content: space-between;
 }
+/* ADD OFFER */
+.offers-container {
+  margin-top: 20px;
+}
+.offer-details {
+  display: flex;
+  gap: 10px;
+  position: relative;
+}
+.offer-details > img {
+  width: 125px;
+  height: 125px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.offer-description > h6 {
+  margin-bottom: 0px;
+}
+.delete-offer-button {
+  position: absolute !important;
+  right: 20px !important;
+  bottom: 15px !important;
+  background-color: #f6416c !important;
+}

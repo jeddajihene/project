@@ -45,19 +45,26 @@ const NavbarC = () => {
               </Nav.Link>
             </div>
             {localStorage.getItem("token") || userReducer.auth ? (
-              <div className="nav-bar-right">
-                <Chip
-                  className="avatar-chip"
-                  onClick={() => handleClick(userReducer.user?._id)}
-                  avatar={<Avatar alt="User" src={userReducer.user?.avatar} />}
-                  label={userReducer.user?.name}
-                  variant="outlined"
-                />
-                <Nav.Link as={Link} to="edit-profile">
-                  Edit profile
-                </Nav.Link>
-                <Nav.Link onClick={handleLogOut}>LogOut</Nav.Link>
-              </div>
+              <>
+                <div className="nav-bar-right">
+                  {userReducer.user?.category === "professional" && (
+                    <Chip
+                      className="avatar-chip"
+                      onClick={() => handleClick(userReducer.user?._id)}
+                      avatar={
+                        <Avatar alt="User" src={userReducer.user?.avatar} />
+                      }
+                      label={userReducer.user?.name}
+                      variant="outlined"
+                    />
+                  )}
+
+                  <Nav.Link as={Link} to="edit-profile">
+                    Edit profile
+                  </Nav.Link>
+                  <Nav.Link onClick={handleLogOut}>LogOut</Nav.Link>
+                </div>
+              </>
             ) : (
               <div className="nav-bar-right">
                 <Nav.Link onClick={handleregister}>Register</Nav.Link>

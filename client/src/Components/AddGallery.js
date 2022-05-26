@@ -3,32 +3,61 @@ import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import { Alert, IconButton } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { addGalleryAction } from "../redux/Actions/galleryAction";
+import {
+  addGalleryAction,
+  deleteGalleryAction
+} from "../redux/Actions/galleryAction";
 
 const AddGallery = () => {
   const galleryReducer = useSelector((state) => state.galleryReducer);
   const dispatch = useDispatch();
   const addGalleryImage = useRef();
   const [galleryImage, setGalleryImage] = useState(new FormData());
-  const [showGalleryImage, setShowGallery] = useState([]);
+  const [showGalleryImage, setShowGallery] = useState(galleryReducer.images);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  useEffect(() => {
+    setShowGallery(galleryReducer.images);
+  }, [galleryReducer.images]);
+  useEffect(() => {
+    setShowSuccessAlert(false);
+  }, []);
   const handleAddGallery = (e) => {
-    console.log("files", e.target.files);
-    let formData = new FormData();
-    for (let i = 0; i < e.target.files.length; i++) {
-      formData.append("gallery", e.target.files[i]);
+    if (
+      e.target.files &&
+      e.target.files.length < 13 - showGalleryImage.length
+    ) {
+      console.log("files", e.target.files);
+      let formData = new FormData();
+      for (let i = 0; i < e.target.files.length; i++) {
+        formData.append("gallery", e.target.files[i]);
+      }
+      setGalleryImage(formData);
+      const fileArray = Array.from(e.target.files).map((file) =>
+        URL.createObjectURL(file)
+      );
+      // setShowGallery((prevImages) => prevImages.concat(fileArray));
+      setShowGallery((prevImages) =>
+        prevImages.concat(
+          fileArray.map((el) => {
+            return { imageName: el };
+          })
+        )
+      );
     }
-    setGalleryImage(formData);
-    const fileArray = Array.from(e.target.files).map((file) =>
-      URL.createObjectURL(file)
-    );
-    setShowGallery((prevImages) => prevImages.concat(fileArray));
   };
-  const deleteImage = (i) => {
-    const arrImages = showGalleryImage.filter(
-      (el) => showGalleryImage.indexOf(el) !== i
-    );
-    setShowGallery(arrImages);
+  const deleteImage = (index) => {
+    if (showGalleryImage[index]._id) {
+      dispatch(deleteGalleryAction(showGalleryImage[index]._id));
+      const arrImages = showGalleryImage.filter(
+        (el) => showGalleryImage.indexOf(el) !== index
+      );
+      setShowGallery(arrImages);
+    } else {
+      const arrImages = showGalleryImage.filter(
+        (el) => showGalleryImage.indexOf(el) !== index
+      );
+      setShowGallery(arrImages);
+    }
   };
   const saveAddGallery = () => {
     dispatch(addGalleryAction(galleryImage));
@@ -44,16 +73,16 @@ const AddGallery = () => {
       <div class="card-body">
         <div className="gallery-container">
           {showGalleryImage &&
-            showGalleryImage.map((el, i) => (
+            showGalleryImage.map((el, index) => (
               <div
-                key={i}
+                key={index}
                 className="show-image-container"
                 style={{ margin: "20px 0px" }}
               >
-                <img alt="" src={el} />
+                <img alt="" src={el.imageName} />
                 <IconButton
                   className="delete-image-icon"
-                  onClick={() => deleteImage(i)}
+                  onClick={() => deleteImage(index)}
                 >
                   <HighlightOffIcon style={{ color: "#f6416c" }} />
                 </IconButton>

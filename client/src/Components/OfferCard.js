@@ -1,13 +1,7 @@
 import React from "react";
 import "../styles/offerCard.css";
-import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import { IconButton } from "@mui/material";
-import { useSelector, useDispatch } from "react-redux";
-import { deleteOfferAction } from "../redux/Actions/offerActions";
 
-const OfferCard = ({ offer, id }) => {
-  const userReducer = useSelector((state) => state.userReducer);
-  const dispatch = useDispatch();
+const OfferCard = ({ offer }) => {
   return (
     <>
       <div class="wrapper">
@@ -21,18 +15,11 @@ const OfferCard = ({ offer, id }) => {
           </div>
           <div class="product-price-btn">
             <p>
-              <span className="price">{offer?.offerPrice}</span>DT
+              <span className="price">{offer?.offerPrice}</span>
+              <span className="price">&nbsp;DT</span>
             </p>
-            <button type="button">buy now</button>
           </div>
         </div>
-        {userReducer.user._id === id && (
-          <div className="delete-offer-icon">
-            <IconButton onClick={() => dispatch(deleteOfferAction(offer?._id))}>
-              <HighlightOffIcon style={{ color: "#f6416c" }} />
-            </IconButton>
-          </div>
-        )}
       </div>
     </>
   );

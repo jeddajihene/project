@@ -12,28 +12,8 @@ const ProfileCard = ({ profile }) => {
         </div>
         <div className="profile-content">
           <div className="profile-details">
-            <h2>
-              {profile.name}
-              <br></br>
-              <span>souissi one</span>
-            </h2>
-            <div className="data">
-              <h3>
-                342
-                <br></br>
-                <span>offers</span>
-              </h3>
-              <h3>
-                342
-                <br></br>
-                <span>price</span>
-              </h3>
-              <h3>
-                342
-                <br></br>
-                <span>date</span>
-              </h3>
-            </div>
+            <h2>{profile.name}</h2>
+
             <div className="actionBtn">
               <button
                 onClick={() => {

@@ -40,4 +40,32 @@ imageRouter.post(
     }
   }
 );
+//get user images
+imageRouter.get("/getimages", isAuth, async (req, res) => {
+  try {
+    const images = await image.find({ ownerId: req.user.id });
+    res.status(200).send(images);
+  } catch (error) {
+    res.status(500).send({ msg: "could not get images" });
+  }
+});
+
+//delete imgae
+imageRouter.delete("/deleteimage/:id", isAuth, async (req, res) => {
+  try {
+    const deleteImage = await image.findById(req.params.id);
+    const user = await users.findById(req.user.id);
+    let arr = user.images;
+    console.log(arr);
+    user.images = [];
+    console.log(user.images);
+    user.images = arr.filter((el) => el != deleteImage.id);
+    console.log("new", user.images);
+    await user.save();
+    await image.findByIdAndDelete(req.params.id);
+    res.status(200).send(req.params.id);
+  } catch (error) {
+    res.status(500).send("image not deleted");
+  }
+});
 module.exports = imageRouter;

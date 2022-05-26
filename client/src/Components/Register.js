@@ -26,6 +26,7 @@ import {
 import { useNavigate } from "react-router-dom";
 
 const Register = ({ register, setRegister }) => {
+  const userData = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [registerForm, setRegisterForm] = useState({
@@ -51,9 +52,13 @@ const Register = ({ register, setRegister }) => {
   };
   const handleSubmit = () => {
     dispatch(registerUser(registerForm, navigate));
-    setRegister(false);
   };
-  const userData = useSelector((state) => state.userReducer);
+  useEffect(() => {
+    if (userData.auth) {
+      handleClose();
+    }
+  }, [userData.auth]);
+
   return (
     <>
       <Modal open={register} onClose={handleClose}>

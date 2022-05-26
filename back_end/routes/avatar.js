@@ -26,7 +26,7 @@ avatarRouter.post(
       user.avatar = path;
       await user.save();
       console.log("avatar", user.avatar);
-      res.status(200).send({ msg: "Avatar is added" });
+      res.status(200).send({ msg: "Avatar is updated", user });
     } catch (error) {
       res.status(500).send("could not add avatar");
     }

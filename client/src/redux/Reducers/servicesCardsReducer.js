@@ -6,9 +6,11 @@ import {
   GET_ANIMATOR_SUCCESS,
   GET_ANIMATOR_FAIL,
   GET_PASTRY_SUCCESS,
-  GET_PASTRY_FAIL
+  GET_PASTRY_FAIL,
+  LOADING
 } from "../actionTypes/userActionTypes";
 const initialState = {
+  load: true,
   ourPhotographers: null,
   decorator: null,
   animator: null,
@@ -17,10 +19,16 @@ const initialState = {
 };
 const servicesCardsReducer = (state = initialState, { type, payload }) => {
   switch (type) {
+    case LOADING:
+      return {
+        ...state,
+        load: false
+      };
     case GET_PHOTOGRAPHER_SUCCESS:
       return {
         ...state,
-        ourPhotographers: payload
+        ourPhotographers: payload,
+        load: false
       };
     case GET_PHOTOGRAPHER_FAIL:
       return {
@@ -31,7 +39,8 @@ const servicesCardsReducer = (state = initialState, { type, payload }) => {
     case GET_DECORATOR_SUCCESS:
       return {
         ...state,
-        decorator: payload
+        decorator: payload,
+        load: false
       };
     case GET_DECORATOR_FAIL:
       return {
@@ -42,7 +51,8 @@ const servicesCardsReducer = (state = initialState, { type, payload }) => {
     case GET_ANIMATOR_SUCCESS:
       return {
         ...state,
-        animator: payload
+        animator: payload,
+        load: false
       };
     case GET_ANIMATOR_FAIL:
       return {
@@ -53,7 +63,8 @@ const servicesCardsReducer = (state = initialState, { type, payload }) => {
     case GET_PASTRY_SUCCESS:
       return {
         ...state,
-        pastrys: payload
+        pastrys: payload,
+        load: false
       };
     case GET_PASTRY_FAIL:
       return {

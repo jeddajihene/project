@@ -1,7 +1,7 @@
 import {
   CONTACT_US_SUCCESS,
   CONTACT_US_FAIL,
-  REMOVE_ERROR
+  REMOVE
 } from "../actionTypes/userActionTypes";
 const initialState = {
   success_contactUs_msg: "",
@@ -19,6 +19,11 @@ const contactUsReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         errors: payload.errors
+      };
+    case REMOVE:
+      return {
+        ...state,
+        success_contactUs_msg: ""
       };
     default:
       return state;

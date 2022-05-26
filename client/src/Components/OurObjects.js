@@ -8,28 +8,28 @@ const OurObjects = () => {
   const objectsArr = [
     {
       img: balloons,
-      title: "Pastry shop",
-      desc: "lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      title: "Unforgettable Time",
+      desc: "We never let amazing moments fade from your memory. Our goal is to establish them forever"
     },
     {
       img: cake,
-      title: "Photography",
-      desc: "lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      title: "Unique Scenarios",
+      desc: " Our goal is to make your day special in all its details..."
     },
     {
       img: confetti,
-      title: "Decoration",
-      desc: "lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      title: "Perfect Venues",
+      desc: "To those who have come to share their happy times with you... Comfort and hospitality is our mission"
     },
     {
       img: party,
-      title: "Animation",
-      desc: "lorem ipsum dolor sit amet, consectetur adipiscing elit",
-    },
+      title: "Friendly Team",
+      desc: "Our team is always working to make you happy and fulfill your desires..."
+    }
   ];
   return (
-    <div>
-      <h1 className="title-object">Our objects</h1>
+    <div style={{ marginTop: 40 }}>
+      {/* <h1 className="title-object">Our objectifs</h1> */}
       <div className="object-cards-container">
         {objectsArr.map((el) => (
           <div className="object-card">

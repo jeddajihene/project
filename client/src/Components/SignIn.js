@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Navbar/Navbar.css";
 import {
   TextField,
@@ -17,6 +17,7 @@ import { loginUser } from "../redux/Actions/userActions";
 import { useNavigate } from "react-router-dom";
 import { removeUserErrorAction } from "../redux/Actions/userActions";
 const SignIn = ({ signIn, setSignIn }) => {
+  const userData = useSelector((state) => state.userReducer);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [signInForm, setSignInForm] = useState({
@@ -37,9 +38,13 @@ const SignIn = ({ signIn, setSignIn }) => {
   };
   const handleSubmit = () => {
     dispatch(loginUser(signInForm));
-    setSignIn(false);
   };
-  const userData = useSelector((state) => state.userReducer);
+  useEffect(() => {
+    if (userData.auth) {
+      handleClose();
+    }
+  }, [userData.auth]);
+
   return (
     <>
       <Modal open={signIn} onClose={handleClose}>

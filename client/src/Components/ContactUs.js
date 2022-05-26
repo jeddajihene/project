@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { TextField, Button, Alert } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  contactUsAction,
-  removeErrorAction
-} from "../redux/Actions/contactUsAtions";
+import { contactUsAction } from "../redux/Actions/contactUsAtions";
+import { removeAction } from "../redux/Actions/removeAction";
 
 const ContactUs = () => {
   const contactUsReducer = useSelector((state) => state.contactUsReducer);
@@ -49,7 +47,7 @@ const ContactUs = () => {
               onChange={handleChange}
               name="name"
             />
-            {contactUsReducer.errors.filter(
+            {contactUsReducer.errors?.filter(
               (el) => el.msg === "please add your full name"
             ).length !== 0 && (
               <p className="red-msg-error-register">
@@ -67,7 +65,7 @@ const ContactUs = () => {
               onChange={handleChange}
               name="email"
             />
-            {contactUsReducer.errors.filter(
+            {contactUsReducer.errors?.filter(
               (el) => el.msg === "please add a valid email"
             ).length !== 0 && (
               <p className="red-msg-error-register">
@@ -87,7 +85,7 @@ const ContactUs = () => {
               onChange={handleChange}
               name="message"
             />
-            {contactUsReducer.errors.filter(
+            {contactUsReducer.errors?.filter(
               (el) => el.msg === "please add your message"
             ).length !== 0 && (
               <p className="red-msg-error-register">*please add your message</p>
@@ -107,6 +105,7 @@ const ContactUs = () => {
                 severity="success"
                 onClose={() => {
                   setShowSuccessAlert(false);
+                  dispatch(removeAction());
                 }}
               >
                 {contactUsReducer?.success_contactUs_msg}

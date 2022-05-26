@@ -12,23 +12,40 @@ commentaireRouter.post("/addcomment/:id", isAuth, async (req, res) => {
     const newComment = new commentaires({
       ...req.body,
       ownerId: req.user.id,
-      profilId: req.params.id,
+      profilId: req.params.id
     });
-    await newComment.save();
+    await newComment.save().then(() => {
+      commentaires
+        .populate(newComment, {
+          path: "ownerId",
+          select: {
+            name: 1,
+            avatar: 1,
+            address: 1,
+            phone: 1,
+            proNumber: 1
+          }
+        })
+        .then((comment) => res.status(200).send(comment));
+    });
     const user = await users.findById(req.user.id);
     user.comments.push(newComment._id);
     await user.save();
-
-    res.status(200).send({ msg: "comment is added", newComment });
   } catch (error) {
     res.status(500).send("could not add comment");
   }
 });
-//get all comments
-commentaireRouter.get("/getcomment", isAuth, async (req, res) => {
+//get all comments :id mta3 il profil
+commentaireRouter.get("/getcomment/:id", isAuth, async (req, res) => {
   try {
-    const comment = await commentaires.find().populate("userId");
-    res.status(200).send({ msg: "list of comments", comment });
+    const comments = await commentaires
+      .find({ profilId: req.params.id })
+      .populate({
+        path: "ownerId",
+        select: { name: 1, avatar: 1, address: 1, phone: 1, proNumber: 1 }
+      });
+    res.status(200).send(comments);
+    console.log(comments);
   } catch (error) {
     res.status(500).send("could not get comments");
   }
@@ -43,16 +60,15 @@ commentaireRouter.get("/getonecomment/:id", isAuth, async (req, res) => {
   }
 });
 //update comment
+//id du commentaire
 commentaireRouter.put("/updatecomment/:id", isAuth, async (req, res) => {
   try {
-    const updateComment = await commentaires.findByIdAndUpdate(req.params.id, {
-      // $set: { ...req.body },
-      // updateComment.description=req.body.description,
-      // $set:{updateComment.description=req.body.description}
-    });
+    const updateComment = await commentaires.findByIdAndUpdate(req.params.id);
     updateComment.description = req.body.description;
     await updateComment.save();
-    res.status(200).send({ msg: "comment is upadated", updateComment });
+    res
+      .status(200)
+      .send({ id: updateComment._id, description: updateComment.description });
   } catch (error) {
     res.status(500).send("comment not updated");
   }
@@ -71,7 +87,7 @@ commentaireRouter.delete("/deletecomment/:id", isAuth, async (req, res) => {
     await user.save();
     await commentaires.findByIdAndDelete(req.params.id);
 
-    res.status(200).send({ msg: "comment is deleted", deleteComment });
+    res.status(200).send(req.params.id);
   } catch (error) {
     res.status(500).send("comment not deleted");
   }
